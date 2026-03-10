@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --rr-primary: #1E3A5F;
+  --rr-primary-light: #3B82F6;
+  --rr-primary-hover: #2563EB;
+  --rr-accent: #F59E0B;
+  --rr-accent-light: #FCD34D;
+  --rr-success: #10B981;
+  --rr-success-light: #D1FAE5;
+  --rr-warning: #F97316;
+  --rr-warning-light: #FED7AA;
+  --rr-danger: #EF4444;
+  --rr-danger-light: #FEE2E2;
+  --rr-bg: #F8FAFC;
+  --rr-surface: #FFFFFF;
+  --rr-text: #0F172A;
+  --rr-text-secondary: #64748B;
+  --rr-text-muted: #94A3B8;
+  --rr-border: #E2E8F0;
+  --rr-border-light: #F1F5F9;
+  --background: var(--rr-bg);
+  --foreground: var(--rr-text);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-rr-primary: var(--rr-primary);
+  --color-rr-primary-light: var(--rr-primary-light);
+  --color-rr-primary-hover: var(--rr-primary-hover);
+  --color-rr-accent: var(--rr-accent);
+  --color-rr-accent-light: var(--rr-accent-light);
+  --color-rr-success: var(--rr-success);
+  --color-rr-success-light: var(--rr-success-light);
+  --color-rr-warning: var(--rr-warning);
+  --color-rr-warning-light: var(--rr-warning-light);
+  --color-rr-danger: var(--rr-danger);
+  --color-rr-danger-light: var(--rr-danger-light);
+  --color-rr-bg: var(--rr-bg);
+  --color-rr-surface: var(--rr-surface);
+  --color-rr-text: var(--rr-text);
+  --color-rr-text-secondary: var(--rr-text-secondary);
+  --color-rr-text-muted: var(--rr-text-muted);
+  --color-rr-border: var(--rr-border);
+  --color-rr-border-light: var(--rr-border-light);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+* {
+  border-color: var(--rr-border);
+}
+
+::selection {
+  background: var(--rr-primary-light);
+  color: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--rr-primary-light);
+  outline-offset: -1px;
+}
