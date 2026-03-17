@@ -27,15 +27,20 @@ function SearchContent() {
     let filtered = [...products];
 
     if (query) {
-      const q = query.toLowerCase();
-      filtered = filtered.filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.useCases.some((uc) => uc.includes(q)) ||
-          p.category.includes(q)
-      );
+      const stopWords = new Set(["a", "an", "the", "for", "and", "or", "of", "to", "in", "on", "is", "it", "my", "i"]);
+      const words = query.toLowerCase().split(/\s+/).filter((w) => w.length > 0 && !stopWords.has(w));
+      if (words.length > 0) {
+        filtered = filtered.filter((p) => {
+          const searchable = [
+            p.name.toLowerCase(),
+            p.brand.toLowerCase(),
+            p.description.toLowerCase(),
+            p.category.replace("-", " "),
+            ...p.useCases.map((uc) => uc.replace("-", " ")),
+          ].join(" ");
+          return words.every((word) => searchable.includes(word));
+        });
+      }
     }
 
     if (category) {
@@ -58,7 +63,7 @@ function SearchContent() {
     const withAnalysis: { product: Product; analysis: AnalysisResult }[] =
       filtered.map((product) => {
         const reviews = getReviewsForProduct(product.slug);
-        const analysis = analyzeProduct(reviews, product.slug);
+        const analysis = analyzeProduct(reviews, product.slug, product.name);
         return { product, analysis };
       });
 

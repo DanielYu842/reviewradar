@@ -16,6 +16,7 @@ import {
   Smartphone,
   ChefHat,
   Trees,
+  Headphones,
   ArrowRight,
   MessageSquare,
 } from "lucide-react";
@@ -25,6 +26,7 @@ const CATEGORIES = [
   { key: "phones", label: "Phones", icon: Smartphone, count: 0 },
   { key: "kitchen", label: "Kitchen", icon: ChefHat, count: 0 },
   { key: "lawn-garden", label: "Lawn & Garden", icon: Trees, count: 0 },
+  { key: "audio", label: "Audio", icon: Headphones, count: 0 },
 ];
 
 export default function HomePage() {
@@ -35,7 +37,7 @@ export default function HomePage() {
 
   const featured = products.slice(0, 4).map((product) => {
     const reviews = getReviewsForProduct(product.slug);
-    const analysis = analyzeProduct(reviews, product.slug);
+    const analysis = analyzeProduct(reviews, product.slug, product.name);
     return { product, analysis };
   });
 
@@ -112,7 +114,7 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold text-[var(--rr-text)] mb-8">
               Browse by Category
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {categoryCounts.map((cat) => (
                 <Link
                   key={cat.key}
@@ -188,20 +190,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-16">
-          <div className="max-w-3xl mx-auto px-4 text-center">
-            <h2 className="text-2xl font-bold text-[var(--rr-text)] mb-4">
-              Tired of drowning in reviews?
-            </h2>
-            <p className="text-[var(--rr-text-secondary)] mb-8 max-w-xl mx-auto">
-              Whether you&apos;re buying a laptop for school, a phone for your kid, or
-              a blender that won&apos;t break in six months — ReviewRadar gives you
-              the full picture without the headache.
-            </p>
-            <SearchBar />
-          </div>
-        </section>
+
       </main>
       <Footer />
     </>

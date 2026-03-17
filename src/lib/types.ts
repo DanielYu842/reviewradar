@@ -13,7 +13,7 @@ export interface Review {
   verified?: boolean;
 }
 
-export type Category = "laptops" | "phones" | "kitchen" | "lawn-garden";
+export type Category = "laptops" | "phones" | "kitchen" | "lawn-garden" | "audio";
 
 export interface Product {
   slug: string;
@@ -88,5 +88,10 @@ export const CATEGORY_INFO: Record<
     label: "Lawn & Garden",
     description: "Mowers, tools, and outdoor equipment",
     icon: "trees",
+  },
+  audio: {
+    label: "Audio",
+    description: "Headphones, earbuds, and speakers",
+    icon: "headphones",
   },
 };

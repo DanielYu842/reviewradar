@@ -14,7 +14,8 @@ export default function Header() {
     e.preventDefault();
     if (query.trim()) {
       router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-      setQuery("");
+    } else {
+      router.push("/search");
     }
   }
 
@@ -47,6 +48,12 @@ export default function Header() {
 
           <nav className="hidden sm:flex items-center gap-6 text-sm font-medium">
             <Link
+              href="/search"
+              className="hover:text-[var(--rr-accent)] transition-colors"
+            >
+              All
+            </Link>
+            <Link
               href="/search?category=laptops"
               className="hover:text-[var(--rr-accent)] transition-colors"
             >
@@ -69,6 +76,12 @@ export default function Header() {
               className="hover:text-[var(--rr-accent)] transition-colors"
             >
               Garden
+            </Link>
+            <Link
+              href="/search?category=audio"
+              className="hover:text-[var(--rr-accent)] transition-colors"
+            >
+              Audio
             </Link>
           </nav>
 
@@ -97,10 +110,12 @@ export default function Header() {
             </div>
           </form>
           <nav className="flex flex-col gap-2 text-sm">
+            <Link href="/search" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>All Products</Link>
             <Link href="/search?category=laptops" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Laptops</Link>
             <Link href="/search?category=phones" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Phones</Link>
             <Link href="/search?category=kitchen" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Kitchen</Link>
             <Link href="/search?category=lawn-garden" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Garden</Link>
+            <Link href="/search?category=audio" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Audio</Link>
           </nav>
         </div>
       )}

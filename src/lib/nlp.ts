@@ -227,7 +227,7 @@ function detectAspects(reviews: Review[]): { pros: ProConItem[]; cons: ProConIte
   return { pros: pros.slice(0, 5), cons: cons.slice(0, 4) };
 }
 
-function computePlatformRatings(reviews: Review[], slug: string): PlatformRating[] {
+function computePlatformRatings(reviews: Review[], productName: string): PlatformRating[] {
   const platformData = new Map<Platform, { ratings: number[]; count: number; sentiments: number[] }>();
 
   for (const review of reviews) {
@@ -241,12 +241,13 @@ function computePlatformRatings(reviews: Review[], slug: string): PlatformRating
   }
 
   const result: PlatformRating[] = [];
+  const encoded = encodeURIComponent(productName);
   const platformUrls: Record<Platform, string> = {
-    amazon: `https://amazon.com/dp/${slug}`,
-    reddit: `https://reddit.com/search?q=${slug.replace(/-/g, "+")}`,
-    youtube: `https://youtube.com/results?search_query=${slug.replace(/-/g, "+")}+review`,
-    bestbuy: `https://bestbuy.com/search?query=${slug.replace(/-/g, "+")}`,
-    walmart: `https://walmart.com/search?q=${slug.replace(/-/g, "+")}`,
+    amazon: `https://www.amazon.com/s?k=${encoded}`,
+    reddit: `https://www.reddit.com/search/?q=${encoded}+review`,
+    youtube: `https://www.youtube.com/results?search_query=${encoded}+review`,
+    bestbuy: `https://www.bestbuy.com/site/searchpage.jsp?st=${encoded}`,
+    walmart: `https://www.walmart.com/search?q=${encoded}`,
   };
 
   for (const [platform, data] of platformData) {
@@ -307,7 +308,7 @@ function computeTrustScore(reviews: Review[], platformRatings: PlatformRating[])
   return Math.min(100, Math.max(0, score));
 }
 
-export function analyzeProduct(reviews: Review[], slug: string): AnalysisResult {
+export function analyzeProduct(reviews: Review[], slug: string, productName?: string): AnalysisResult {
   if (reviews.length === 0) {
     return {
       aggregatedRating: 0,
@@ -320,7 +321,7 @@ export function analyzeProduct(reviews: Review[], slug: string): AnalysisResult 
     };
   }
 
-  const platformRatings = computePlatformRatings(reviews, slug);
+  const platformRatings = computePlatformRatings(reviews, productName || slug);
 
   // Aggregated rating: weighted average of platform ratings by review count
   let weightedSum = 0;

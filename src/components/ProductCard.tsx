@@ -2,13 +2,14 @@ import Link from "next/link";
 import { Product, AnalysisResult, CATEGORY_INFO } from "@/lib/types";
 import StarRating from "./StarRating";
 import TrustBadge from "./TrustBadge";
-import { MessageSquare, Laptop, Smartphone, ChefHat, Trees } from "lucide-react";
+import { MessageSquare, Laptop, Smartphone, ChefHat, Trees, Headphones } from "lucide-react";
 
 const categoryIcons = {
   laptops: Laptop,
   phones: Smartphone,
   kitchen: ChefHat,
   "lawn-garden": Trees,
+  audio: Headphones,
 };
 
 interface ProductCardProps {

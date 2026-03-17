@@ -4,34 +4,22 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StarRating from "@/components/StarRating";
 import TrustBadge from "@/components/TrustBadge";
-import PlatformTag from "@/components/PlatformTag";
 import ProConCard from "@/components/ProConCard";
 import AggregatedRatingBar from "@/components/AggregatedRatingBar";
+import ReviewList from "@/components/ReviewList";
 import { getProductBySlug, products } from "@/data/products";
 import { getReviewsForProduct } from "@/data/reviews";
-import { analyzeProduct, scoreSentiment } from "@/lib/nlp";
-import { PLATFORM_INFO, CATEGORY_INFO, Platform } from "@/lib/types";
+import { analyzeProduct } from "@/lib/nlp";
+import { PLATFORM_INFO, CATEGORY_INFO } from "@/lib/types";
 import {
   ExternalLink,
   ChevronLeft,
   Info,
   BarChart3,
-  MessageSquare,
-  TrendingUp,
-  TrendingDown,
-  Minus,
 } from "lucide-react";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
-}
-
-function SentimentIcon({ sentiment }: { sentiment: number }) {
-  if (sentiment > 0.15)
-    return <TrendingUp className="w-3.5 h-3.5 text-[var(--rr-success)]" />;
-  if (sentiment < -0.15)
-    return <TrendingDown className="w-3.5 h-3.5 text-[var(--rr-danger)]" />;
-  return <Minus className="w-3.5 h-3.5 text-[var(--rr-text-muted)]" />;
 }
 
 export default async function ProductPage({
@@ -44,7 +32,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const reviews = getReviewsForProduct(slug);
-  const analysis = analyzeProduct(reviews, slug);
+  const analysis = analyzeProduct(reviews, slug, product.name);
 
   return (
     <>
@@ -172,83 +160,7 @@ export default async function ProductPage({
               </div>
 
               {/* Reviews */}
-              <div className="bg-[var(--rr-surface)] rounded-xl border border-[var(--rr-border)] p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-[var(--rr-text)] flex items-center gap-2">
-                    <MessageSquare className="w-5 h-5 text-[var(--rr-primary-light)]" />
-                    Reviews ({reviews.length})
-                  </h3>
-                </div>
-
-                <div className="space-y-4">
-                  {reviews.slice(0, 15).map((review) => {
-                    const sentiment = scoreSentiment(review.text);
-                    return (
-                      <div
-                        key={review.id}
-                        className="border border-[var(--rr-border-light)] rounded-lg p-4 hover:border-[var(--rr-border)] transition-colors"
-                      >
-                        <div className="flex items-start justify-between gap-3 mb-2">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <PlatformTag
-                              platform={review.platform}
-                              size="sm"
-                            />
-                            <span className="text-sm font-medium text-[var(--rr-text)]">
-                              {review.author}
-                            </span>
-                            {review.verified && (
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--rr-success-light)] text-[var(--rr-success)] font-medium">
-                                Verified
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2 shrink-0">
-                            <SentimentIcon sentiment={sentiment} />
-                            {review.rating !== null && (
-                              <StarRating
-                                rating={review.rating}
-                                size="sm"
-                                showValue={false}
-                              />
-                            )}
-                          </div>
-                        </div>
-
-                        {review.title && (
-                          <h4 className="font-medium text-sm text-[var(--rr-text)] mb-1">
-                            {review.title}
-                          </h4>
-                        )}
-                        <p className="text-sm text-[var(--rr-text-secondary)] leading-relaxed">
-                          {review.text}
-                        </p>
-                        <div className="flex items-center gap-3 mt-2 text-xs text-[var(--rr-text-muted)]">
-                          <span>
-                            {new Date(review.date).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </span>
-                          {review.helpful !== undefined &&
-                            review.helpful > 0 && (
-                              <span>
-                                {review.helpful} found this helpful
-                              </span>
-                            )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {reviews.length > 15 && (
-                  <p className="text-center text-sm text-[var(--rr-text-muted)] mt-4">
-                    Showing 15 of {reviews.length} reviews
-                  </p>
-                )}
-              </div>
+              <ReviewList reviews={reviews} />
             </div>
 
             {/* Right column: Source Links + Specs */}
