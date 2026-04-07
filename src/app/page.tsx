@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
@@ -19,18 +20,28 @@ import {
   Headphones,
   ArrowRight,
   MessageSquare,
+  Layers,
+  ShieldAlert,
+  Scale,
 } from "lucide-react";
 
-const CATEGORIES = [
+const ELECTRONICS_CATEGORIES = [
   { key: "laptops", label: "Laptops", icon: Laptop, count: 0 },
   { key: "phones", label: "Phones", icon: Smartphone, count: 0 },
-  { key: "kitchen", label: "Kitchen", icon: ChefHat, count: 0 },
-  { key: "lawn-garden", label: "Lawn & Garden", icon: Trees, count: 0 },
   { key: "audio", label: "Audio", icon: Headphones, count: 0 },
 ];
 
+const HOME_CATEGORIES = [
+  { key: "kitchen", label: "Kitchen", icon: ChefHat, count: 0 },
+  { key: "lawn-garden", label: "Lawn & Garden", icon: Trees, count: 0 },
+];
+
 export default function HomePage() {
-  const categoryCounts = CATEGORIES.map((cat) => ({
+  const electronicsCounts = ELECTRONICS_CATEGORIES.map((cat) => ({
+    ...cat,
+    count: products.filter((p) => p.category === cat.key).length,
+  }));
+  const homeCounts = HOME_CATEGORIES.map((cat) => ({
     ...cat,
     count: products.filter((p) => p.category === cat.key).length,
   }));
@@ -56,12 +67,12 @@ export default function HomePage() {
                 </h1>
               </div>
               <p className="text-xl sm:text-2xl text-white/80 mb-2 font-medium">
-                The full picture, in one place.
+                Every review. Every platform. One trust score.
               </p>
               <p className="text-base text-white/60 mb-10 max-w-xl mx-auto">
-                Stop opening 10 tabs to research a product. We aggregate reviews
-                from Amazon, Reddit, YouTube, and more — so you can decide with
-                confidence.
+                Amazon only shows you Amazon reviews. ReviewRadar pulls from
+                five sources — Amazon, Reddit, YouTube, Best Buy, and Walmart —
+                and cross-references them so you see what&apos;s real before you buy.
               </p>
               <SearchBar large />
             </div>
@@ -108,28 +119,148 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Categories */}
+        {/* Why ReviewRadar */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[var(--rr-text)] mb-8">
+            <h2 className="text-2xl font-bold text-center text-[var(--rr-text)] mb-4">
+              Why ReviewRadar Instead of Amazon?
+            </h2>
+            <p className="text-center text-sm text-[var(--rr-text-secondary)] max-w-2xl mx-auto mb-12">
+              Amazon is a marketplace — it has a financial incentive to sell, not
+              just inform. ReviewRadar is a research tool built to give you the
+              unfiltered truth.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-[var(--rr-surface)] rounded-xl border border-[var(--rr-border)] p-6">
+                <div className="w-12 h-12 rounded-xl bg-[var(--rr-primary-light)]/10 flex items-center justify-center mb-4">
+                  <Layers className="w-6 h-6 text-[var(--rr-primary-light)]" />
+                </div>
+                <h3 className="font-semibold text-lg text-[var(--rr-text)] mb-2">
+                  Cross-Platform Truth
+                </h3>
+                <p className="text-sm text-[var(--rr-text-secondary)] mb-4">
+                  Amazon only shows its own reviews. We pull from five independent
+                  sources — including Reddit threads and YouTube teardowns — so you
+                  get perspectives Amazon will never surface.
+                </p>
+                <div className="text-xs text-[var(--rr-text-muted)] border-t border-[var(--rr-border-light)] pt-3">
+                  <span className="font-medium text-[var(--rr-primary-light)]">Amazon:</span>{" "}
+                  1 source &nbsp;→&nbsp;{" "}
+                  <span className="font-medium text-[var(--rr-primary-light)]">ReviewRadar:</span>{" "}
+                  5 sources
+                </div>
+              </div>
+
+              <div className="bg-[var(--rr-surface)] rounded-xl border border-[var(--rr-border)] p-6">
+                <div className="w-12 h-12 rounded-xl bg-[var(--rr-primary-light)]/10 flex items-center justify-center mb-4">
+                  <ShieldAlert className="w-6 h-6 text-[var(--rr-primary-light)]" />
+                </div>
+                <h3 className="font-semibold text-lg text-[var(--rr-text)] mb-2">
+                  Trust Score
+                </h3>
+                <p className="text-sm text-[var(--rr-text-secondary)] mb-4">
+                  Our proprietary trust score measures source diversity, review
+                  volume, cross-platform agreement, and recency. Amazon stars can
+                  be inflated by incentivized reviews — our score cannot.
+                </p>
+                <div className="text-xs text-[var(--rr-text-muted)] border-t border-[var(--rr-border-light)] pt-3">
+                  <span className="font-medium text-[var(--rr-primary-light)]">Amazon:</span>{" "}
+                  star average &nbsp;→&nbsp;{" "}
+                  <span className="font-medium text-[var(--rr-primary-light)]">ReviewRadar:</span>{" "}
+                  multi-factor trust metric
+                </div>
+              </div>
+
+              <div className="bg-[var(--rr-surface)] rounded-xl border border-[var(--rr-border)] p-6">
+                <div className="w-12 h-12 rounded-xl bg-[var(--rr-primary-light)]/10 flex items-center justify-center mb-4">
+                  <Scale className="w-6 h-6 text-[var(--rr-primary-light)]" />
+                </div>
+                <h3 className="font-semibold text-lg text-[var(--rr-text)] mb-2">
+                  Unbiased Aggregation
+                </h3>
+                <p className="text-sm text-[var(--rr-text-secondary)] mb-4">
+                  We have no products to sell and no affiliate stake. ReviewRadar
+                  surfaces community voices from Reddit, YouTube creators, and
+                  retail sites equally — so the data speaks for itself.
+                </p>
+                <div className="text-xs text-[var(--rr-text-muted)] border-t border-[var(--rr-border-light)] pt-3">
+                  <span className="font-medium text-[var(--rr-primary-light)]">Amazon:</span>{" "}
+                  marketplace seller &nbsp;→&nbsp;{" "}
+                  <span className="font-medium text-[var(--rr-primary-light)]">ReviewRadar:</span>{" "}
+                  neutral research tool
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Categories */}
+        <section className="py-16 bg-[var(--rr-surface)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-[var(--rr-text)] mb-10">
               Browse by Category
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {categoryCounts.map((cat) => (
-                <Link
-                  key={cat.key}
-                  href={`/search?category=${cat.key}`}
-                  className="group bg-[var(--rr-surface)] rounded-xl border border-[var(--rr-border)] p-6 hover:border-[var(--rr-primary-light)] hover:shadow-md transition-all text-center"
-                >
-                  <cat.icon className="w-10 h-10 mx-auto mb-3 text-[var(--rr-text-muted)] group-hover:text-[var(--rr-primary-light)] transition-colors" />
-                  <h3 className="font-semibold text-[var(--rr-text)]">
-                    {cat.label}
-                  </h3>
-                  <p className="text-sm text-[var(--rr-text-muted)] mt-1">
-                    {cat.count} products
-                  </p>
-                </Link>
-              ))}
+
+            {/* Tier 1: High-Consideration Electronics */}
+            <div className="mb-10">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-[var(--rr-text)]">
+                  High-Consideration Electronics
+                </h3>
+                <p className="text-sm text-[var(--rr-text-secondary)] mt-1">
+                  Over 80% of electronics buyers read reviews on 3+ platforms
+                  before purchasing — this is where multi-source aggregation
+                  delivers the most value.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {electronicsCounts.map((cat) => (
+                  <Link
+                    key={cat.key}
+                    href={`/search?category=${cat.key}`}
+                    className="group bg-[var(--rr-bg)] rounded-xl border border-[var(--rr-border)] p-6 hover:border-[var(--rr-primary-light)] hover:shadow-md transition-all text-center"
+                  >
+                    <cat.icon className="w-10 h-10 mx-auto mb-3 text-[var(--rr-text-muted)] group-hover:text-[var(--rr-primary-light)] transition-colors" />
+                    <h4 className="font-semibold text-[var(--rr-text)]">
+                      {cat.label}
+                    </h4>
+                    <p className="text-sm text-[var(--rr-text-muted)] mt-1">
+                      {cat.count} products
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Tier 2: Trending Home */}
+            <div>
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-[var(--rr-text)]">
+                  Trending Home
+                </h3>
+                <p className="text-sm text-[var(--rr-text-secondary)] mt-1">
+                  Kitchen and outdoor products have among the highest rates of
+                  unreliable Amazon reviews — our trust score helps you filter
+                  the noise.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+                {homeCounts.map((cat) => (
+                  <Link
+                    key={cat.key}
+                    href={`/search?category=${cat.key}`}
+                    className="group bg-[var(--rr-bg)] rounded-xl border border-[var(--rr-border)] p-6 hover:border-[var(--rr-primary-light)] hover:shadow-md transition-all text-center"
+                  >
+                    <cat.icon className="w-10 h-10 mx-auto mb-3 text-[var(--rr-text-muted)] group-hover:text-[var(--rr-primary-light)] transition-colors" />
+                    <h4 className="font-semibold text-[var(--rr-text)]">
+                      {cat.label}
+                    </h4>
+                    <p className="text-sm text-[var(--rr-text-muted)] mt-1">
+                      {cat.count} products
+                    </p>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -156,8 +287,14 @@ export default function HomePage() {
                   className="group"
                 >
                   <div className="bg-[var(--rr-bg)] rounded-xl border border-[var(--rr-border)] hover:border-[var(--rr-primary-light)] hover:shadow-lg transition-all overflow-hidden">
-                    <div className="bg-[var(--rr-border-light)] h-40 flex items-center justify-center">
-                      <Radar className="w-12 h-12 text-[var(--rr-text-muted)] group-hover:text-[var(--rr-primary-light)] transition-colors" />
+                    <div className="bg-[var(--rr-border-light)] h-40 relative overflow-hidden">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
                     </div>
                     <div className="p-4">
                       <p className="text-xs text-[var(--rr-text-muted)] font-medium uppercase">

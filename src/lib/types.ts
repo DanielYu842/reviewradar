@@ -65,33 +65,40 @@ export const PLATFORM_INFO: Record<
   walmart: { label: "Walmart", color: "#0071DC", bgColor: "#E8F4FF" },
 };
 
+export type CategoryGroup = "electronics" | "home";
+
 export const CATEGORY_INFO: Record<
   Category,
-  { label: string; description: string; icon: string }
+  { label: string; description: string; icon: string; group: CategoryGroup }
 > = {
   laptops: {
     label: "Laptops",
     description: "Notebooks, ultrabooks, and portable computers",
     icon: "laptop",
+    group: "electronics",
   },
   phones: {
     label: "Phones",
     description: "Smartphones and mobile devices",
     icon: "smartphone",
+    group: "electronics",
   },
   kitchen: {
     label: "Kitchen",
     description: "Appliances, cookware, and kitchen tools",
     icon: "chefHat",
+    group: "home",
   },
   "lawn-garden": {
     label: "Lawn & Garden",
     description: "Mowers, tools, and outdoor equipment",
     icon: "trees",
+    group: "home",
   },
   audio: {
     label: "Audio",
     description: "Headphones, earbuds, and speakers",
     icon: "headphones",
+    group: "electronics",
   },
 };

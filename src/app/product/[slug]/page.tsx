@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StarRating from "@/components/StarRating";
@@ -15,7 +16,6 @@ import {
   ExternalLink,
   ChevronLeft,
   Info,
-  BarChart3,
 } from "lucide-react";
 
 export function generateStaticParams() {
@@ -62,8 +62,15 @@ export default async function ProductPage({
           <div className="bg-[var(--rr-surface)] rounded-2xl border border-[var(--rr-border)] p-6 sm:p-8 mb-6">
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-1/3">
-                <div className="bg-[var(--rr-border-light)] rounded-xl h-64 flex items-center justify-center">
-                  <BarChart3 className="w-20 h-20 text-[var(--rr-text-muted)]" />
+                <div className="bg-[var(--rr-border-light)] rounded-xl h-64 relative overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover rounded-xl"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    priority
+                  />
                 </div>
               </div>
 

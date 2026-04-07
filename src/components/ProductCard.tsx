@@ -1,16 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Product, AnalysisResult, CATEGORY_INFO } from "@/lib/types";
 import StarRating from "./StarRating";
 import TrustBadge from "./TrustBadge";
-import { MessageSquare, Laptop, Smartphone, ChefHat, Trees, Headphones } from "lucide-react";
-
-const categoryIcons = {
-  laptops: Laptop,
-  phones: Smartphone,
-  kitchen: ChefHat,
-  "lawn-garden": Trees,
-  audio: Headphones,
-};
+import { MessageSquare } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -18,14 +11,18 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, analysis }: ProductCardProps) {
-  const CategoryIcon = categoryIcons[product.category];
-
   return (
     <Link href={`/product/${product.slug}`} className="group block">
       <div className="bg-[var(--rr-surface)] rounded-xl border border-[var(--rr-border)] hover:border-[var(--rr-primary-light)] hover:shadow-lg transition-all duration-200 overflow-hidden h-full flex flex-col">
-        <div className="bg-[var(--rr-border-light)] h-48 flex items-center justify-center relative">
-          <CategoryIcon className="w-16 h-16 text-[var(--rr-text-muted)] group-hover:text-[var(--rr-primary-light)] transition-colors" />
-          <div className="absolute top-3 right-3">
+        <div className="bg-[var(--rr-border-light)] h-48 relative overflow-hidden">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          />
+          <div className="absolute top-3 right-3 z-10">
             <TrustBadge score={analysis.trustScore} size="sm" showLabel={false} />
           </div>
         </div>

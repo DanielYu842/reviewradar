@@ -46,13 +46,14 @@ export default function Header() {
             </div>
           </form>
 
-          <nav className="hidden sm:flex items-center gap-6 text-sm font-medium">
+          <nav className="hidden sm:flex items-center gap-5 text-sm font-medium">
             <Link
               href="/search"
               className="hover:text-[var(--rr-accent)] transition-colors"
             >
               All
             </Link>
+            <span className="h-4 w-px bg-white/20" />
             <Link
               href="/search?category=laptops"
               className="hover:text-[var(--rr-accent)] transition-colors"
@@ -66,6 +67,13 @@ export default function Header() {
               Phones
             </Link>
             <Link
+              href="/search?category=audio"
+              className="hover:text-[var(--rr-accent)] transition-colors"
+            >
+              Audio
+            </Link>
+            <span className="h-4 w-px bg-white/20" />
+            <Link
               href="/search?category=kitchen"
               className="hover:text-[var(--rr-accent)] transition-colors"
             >
@@ -76,12 +84,6 @@ export default function Header() {
               className="hover:text-[var(--rr-accent)] transition-colors"
             >
               Garden
-            </Link>
-            <Link
-              href="/search?category=audio"
-              className="hover:text-[var(--rr-accent)] transition-colors"
-            >
-              Audio
             </Link>
           </nav>
 
@@ -109,13 +111,15 @@ export default function Header() {
               />
             </div>
           </form>
-          <nav className="flex flex-col gap-2 text-sm">
+          <nav className="flex flex-col gap-1 text-sm">
             <Link href="/search" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>All Products</Link>
+            <p className="text-xs text-white/40 uppercase tracking-wider pt-2 pb-1">Electronics</p>
             <Link href="/search?category=laptops" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Laptops</Link>
             <Link href="/search?category=phones" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Phones</Link>
+            <Link href="/search?category=audio" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Audio</Link>
+            <p className="text-xs text-white/40 uppercase tracking-wider pt-2 pb-1">Home</p>
             <Link href="/search?category=kitchen" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Kitchen</Link>
             <Link href="/search?category=lawn-garden" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Garden</Link>
-            <Link href="/search?category=audio" className="py-2 hover:text-[var(--rr-accent)]" onClick={() => setMobileMenuOpen(false)}>Audio</Link>
           </nav>
         </div>
       )}
